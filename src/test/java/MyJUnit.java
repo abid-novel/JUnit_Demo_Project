@@ -11,6 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class MyJUnit {
     WebDriver driver;
@@ -67,6 +68,17 @@ public class MyJUnit {
 
         Assert.assertTrue(doubleClickBtnMsg.contains("You have done a double click"));
         Assert.assertTrue(rightClickBtnMsg.contains("You have done a right click"));
+
+    }
+
+    @Test
+    public void clickIfMultipleButton() {
+        driver.get("https://demoqa.com/buttons");
+        List<WebElement> buttonElement = driver.findElements(By.tagName("button"));
+        Actions actions = new Actions(driver);
+        actions.doubleClick(buttonElement.get(1)).perform();
+        actions.contextClick(buttonElement.get(2)).perform();
+        actions.click(buttonElement.get(3)).perform();
 
     }
 
