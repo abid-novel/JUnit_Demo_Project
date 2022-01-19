@@ -3,8 +3,10 @@ import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -37,6 +39,34 @@ public class MyJUnit {
         wait = new WebDriverWait(driver,Duration.ofSeconds(40));
         boolean status = wait.until(ExpectedConditions.elementToBeClickable(By.className("banner-image"))).isDisplayed();
         Assert.assertTrue(status);
+
+    }
+
+    @Test
+    public void fillUpForm() {
+        driver.get("https://demoqa.com/text-box");
+        driver.findElement(By.id("userName")).sendKeys("Mr. Rahim");
+        driver.findElement(By.id("userEmail")).sendKeys("Rahim@gmail.com");
+        driver.findElement(By.id("currentAddress")).sendKeys("Bashundhara R/A");
+        driver.findElement(By.id("permanentAddress")).sendKeys("Tangail");
+        driver.findElement(By.id("submit")).click();
+    }
+
+    @Test
+    public void clickButton() {
+        driver.get("https://demoqa.com/buttons");
+        WebElement doubleClickBtnElement = driver.findElement(By.id("doubleClickBtn"));
+        WebElement rightClickBtnElement = driver.findElement(By.id("rightClickBtn"));
+        Actions actions = new Actions(driver);
+
+        actions.doubleClick(doubleClickBtnElement).perform();
+        actions.contextClick(rightClickBtnElement).perform();
+
+        String doubleClickBtnMsg = driver.findElement(By.id("doubleClickMessage")).getText();
+        String rightClickBtnMsg = driver.findElement(By.id("rightClickMessage")).getText();
+
+        Assert.assertTrue(doubleClickBtnMsg.contains("You have done a double click"));
+        Assert.assertTrue(rightClickBtnMsg.contains("You have done a right click"));
 
     }
 
