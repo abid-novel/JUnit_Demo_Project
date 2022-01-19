@@ -82,6 +82,31 @@ public class MyJUnit {
 
     }
 
+    @Test
+    public void handleAlerts() throws InterruptedException {
+        driver.get("https://demoqa.com/alerts");
+
+        //alert button 1
+        driver.findElement(By.id("alertButton")).click();
+        driver.switchTo().alert().accept();
+        Thread.sleep(1000);
+
+        //alert button 3
+        driver.findElement(By.id("confirmButton")).click();
+        driver.switchTo().alert().dismiss();
+        Thread.sleep(1000);
+
+        //alert button 4
+        driver.findElement(By.id("promtButton")).click();
+        driver.switchTo().alert().sendKeys("Novel");
+        Thread.sleep(2000);
+        driver.switchTo().alert().accept();
+
+        String alertResult = driver.findElement(By.id("promptResult")).getText();
+        Assert.assertTrue(alertResult.contains("Novel"));
+
+    }
+
 
 
 }
