@@ -2,12 +2,14 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -106,6 +108,33 @@ public class MyJUnit {
         Assert.assertTrue(alertResult.contains("Novel"));
 
     }
+
+    @Test
+    public void selectDate() {
+        driver.get("https://demoqa.com/date-picker");
+        driver.findElement(By.id("datePickerMonthYearInput")).clear();
+        driver.findElement(By.id("datePickerMonthYearInput")).sendKeys("01/01/2022");
+        driver.findElement(By.id("datePickerMonthYearInput")).sendKeys(Keys.ENTER);
+
+    }
+
+    @Test
+    public void selectDropDown() {
+        driver.get("https://demoqa.com/select-menu");
+
+        //Single selection
+        Select select1 = new Select(driver.findElement(By.id("oldSelectMenu")));
+        select1.selectByValue("4");
+
+        //Multiple selection
+        Select select2 = new Select(driver.findElement(By.id("cars")));
+        if (select2.isMultiple()) {
+            select2.selectByValue("saab");
+            select2.selectByValue("audi");
+        }
+    }
+
+
 
 
 
