@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyJUnit {
@@ -132,6 +133,23 @@ public class MyJUnit {
             select2.selectByValue("saab");
             select2.selectByValue("audi");
         }
+    }
+
+    @Test
+    public void handleNewTab() throws InterruptedException {
+        driver.get("https://demoqa.com/links");
+        driver.findElement(By.id("simpleLink")).click();
+        ArrayList <String> w = new ArrayList<>(driver.getWindowHandles());
+        driver.switchTo().window(w.get(1));
+
+
+        wait = new WebDriverWait(driver,Duration.ofSeconds(50));
+        boolean status = wait.until(ExpectedConditions.elementToBeClickable(By.className("banner-image"))).isDisplayed();
+        Assert.assertEquals(true,status);
+
+        driver.close();
+        driver.switchTo().window(w.get(0));
+
     }
 
 
