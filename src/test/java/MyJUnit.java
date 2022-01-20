@@ -1,3 +1,4 @@
+import jdk.nashorn.internal.ir.WhileNode;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 public class MyJUnit {
     WebDriver driver;
@@ -150,6 +153,28 @@ public class MyJUnit {
         driver.close();
         driver.switchTo().window(w.get(0));
 
+    }
+
+    @Test
+    public void handleChildWindow() {
+        driver.get("https://demoqa.com/browser-windows");
+        wait = new WebDriverWait(driver,Duration.ofSeconds(40));
+        WebElement button = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("windowButton"))));
+        button.click();
+
+        String mainWindowHandle = driver.getWindowHandle();
+        Set<String> allWindowHandle = driver.getWindowHandles();
+        Iterator<String> iterator = allWindowHandle.iterator();
+
+        while (iterator.hasNext()) {
+            String childWindow = iterator.next();
+            if (!mainWindowHandle.equalsIgnoreCase(childWindow)) {
+                driver.switchTo().window(childWindow);
+                String getText = driver.findElement(By.id("sampleHeading")).getText();
+                Assert.assertTrue(getText.contains("This is a sample page"));
+
+            }
+        }
     }
 
 
