@@ -177,6 +177,58 @@ public class MyJUnit {
         }
     }
 
+    @Test
+    public void modalDialog() {
+        driver.get("https://demoqa.com/modal-dialogs");
+        wait = new WebDriverWait(driver,Duration.ofSeconds(40));
+        WebElement element =  wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("showSmallModal"))));
+        element.click();
+        driver.findElement(By.id("closeSmallModal")).click();
+
+    }
+
+    @Test
+    public void webTables() {
+        driver.get("https://demoqa.com/webtables");
+        driver.findElement(By.xpath("//span[@id='edit-record-1']")).click();
+        driver.findElement(By.id("firstName")).clear();
+        driver.findElement(By.id("firstName")).sendKeys("Abid");
+
+        driver.findElement(By.id("lastName")).clear();
+        driver.findElement(By.id("lastName")).sendKeys("Novel");
+
+        driver.findElement(By.id("userEmail")).clear();
+        driver.findElement(By.id("userEmail")).sendKeys("abid@test.com");
+
+        driver.findElement(By.id("age")).clear();
+        driver.findElement(By.id("age")).sendKeys("26");
+
+        driver.findElement(By.id("salary")).clear();
+        driver.findElement(By.id("salary")).sendKeys("20000");
+
+        driver.findElement(By.id("department")).clear();
+        driver.findElement(By.id("department")).sendKeys("SQA");
+
+        driver.findElement(By.id("submit")).click();
+
+    }
+
+    @Test
+    public void scrapDataFromWebTables() {
+        driver.get("https://demoqa.com/webtables");
+        WebElement table = driver.findElement(By.className("rt-table"));
+        List <WebElement> allRows = driver.findElements(By.className("rt-tr-group"));
+        int i = 0;
+
+        for (WebElement row : allRows) {
+            List <WebElement> allColumns = driver.findElements(By.className("rt-td"));
+            for (WebElement column : allColumns) {
+                i++;
+                System.out.println("num["+ i + "] = " +column.getText() );
+            }
+        }
+    }
+
 
 
 
