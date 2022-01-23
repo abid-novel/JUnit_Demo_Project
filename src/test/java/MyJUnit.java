@@ -249,6 +249,32 @@ public class MyJUnit {
         driver.switchTo().defaultContent();
     }
 
+    @Test
+    public void mouseHover() throws InterruptedException {
+        driver.get("http://www.iub.edu.bd/");
+        WebElement aboutElement = driver.findElement(By.xpath("//body/div[4]/div[1]/div[1]/ul[1]/li[1]/a[1]"));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(aboutElement).perform();
+        Thread.sleep(5000);
+
+    }
+
+    @Test
+    public void keyBoardEvent() throws InterruptedException {
+        driver.get("https://www.google.com/");
+        WebElement searchBar = driver.findElement(By.name("q"));
+        Actions actions = new Actions(driver);
+        actions.moveToElement(searchBar)
+                .keyDown(Keys.SHIFT)
+                .sendKeys("Selenium Webdriver")
+                .keyUp(Keys.SHIFT)
+                .doubleClick()
+                .contextClick()
+                .perform();
+
+        Thread.sleep(5000);
+    }
+
 
 
 
