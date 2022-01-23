@@ -1,11 +1,9 @@
 import jdk.nashorn.internal.ir.WhileNode;
+import org.apache.commons.io.FileUtils;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.interactions.Actions;
@@ -13,11 +11,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class MyJUnit {
     WebDriver driver;
@@ -274,6 +272,18 @@ public class MyJUnit {
 
         Thread.sleep(5000);
     }
+
+    @Test
+    public void takeScreenShot() throws IOException {
+        driver.get("https://demoqa.com/");
+        File screenShotFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        String time = new SimpleDateFormat("dd-MM-yyyy-hh-mm-ss-aa").format(new Date());
+        String fileWithPath = "./src/test/resources/screenshots/" + time + ".png";
+        File destinationFile = new File(fileWithPath);
+        FileUtils.copyFile(screenShotFile,destinationFile);
+ss
+    }
+
 
 
 
