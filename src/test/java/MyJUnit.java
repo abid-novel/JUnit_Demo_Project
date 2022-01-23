@@ -229,6 +229,25 @@ public class MyJUnit {
         }
     }
 
+    @Test
+    public void uploadImage() {
+        driver.get("https://demoqa.com/upload-download");
+        wait = new WebDriverWait(driver,Duration.ofSeconds(60));
+        WebElement uploadButton = wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(By.id("uploadFile"))));
+        uploadButton.sendKeys("C:\\Users\\Novel\\Desktop\\upload.jpg");
+
+        String text = driver.findElement(By.id("uploadedFilePath")).getText();
+        Assert.assertTrue(text.contains("upload.jpg"));
+    }
+
+    @Test
+    public void handleIframe() {
+        driver.get("https://demoqa.com/frames");
+        driver.switchTo().frame("frame2");
+        String iframeText = driver.findElement(By.id("sampleHeading")).getText();
+        Assert.assertTrue(iframeText.contains("This is a sample page"));
+        driver.switchTo().defaultContent();
+    }
 
 
 
