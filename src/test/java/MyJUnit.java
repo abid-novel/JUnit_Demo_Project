@@ -1,5 +1,9 @@
 import jdk.nashorn.internal.ir.WhileNode;
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +16,8 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -281,11 +287,33 @@ public class MyJUnit {
         String fileWithPath = "./src/test/resources/screenshots/" + time + ".png";
         File destinationFile = new File(fileWithPath);
         FileUtils.copyFile(screenShotFile,destinationFile);
-ss
+
     }
 
+    public static void readFromExcel(String filePath, String fileName, String sheetName ) throws IOException {
+        File file = new File(filePath + "\\" +fileName);
+        FileInputStream inputStream = new FileInputStream(file);
+        Workbook workbook = null;
+        String fileExtensionName = fileName.substring(fileName.indexOf("."));
 
+        if (fileExtensionName.equals(".xls")) {
+            workbook = new HSSFWorkbook(inputStream);
+        }
 
+        Sheet sheet = workbook.getSheet(sheetName);
+        int rowCount = sheet.getFirstRowNum() - sheet.getLastRowNum();
+        for (int i = 0; i < rowCount+1; i++) {
+            Row row = sheet.getRow(i);
+            for (int j = 0; j < row.getLastCellNum(); j++) {
+                System.out.print((row.getCell(j).getStringCellValue()) + "||");
+            }
+            System.out.println();
+        }
+    }
 
+    @Test
+    public void readDataFromExcel() throws IOException {
+        readFromExcel("D:\\Document\\Road to SDET All\\", "Name.xls", "Sheet1");
+    }
 
 }
