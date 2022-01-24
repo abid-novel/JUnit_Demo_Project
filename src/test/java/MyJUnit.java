@@ -4,6 +4,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -314,6 +315,12 @@ public class MyJUnit {
     @Test
     public void readDataFromExcel() throws IOException {
         readFromExcel("D:\\Document\\Road to SDET All\\", "Name.xls", "Sheet1");
+    }
+
+    @After
+    public void closeBrowser() {
+        driver.close();
+        //driver.quit();
     }
 
 }
